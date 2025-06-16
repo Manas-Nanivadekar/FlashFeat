@@ -19,7 +19,7 @@ _A single-digit-millisecond, tamper-proof “express lane” for the data that p
 | -------------------- | ---- | ------ | ------ |
 | End-to-end latency   | 2 ms | 3.8 ms | 4.9 ms |
 
-> Numbers based on a single Graviton3 `c7g.large` test node in `ap-south-1a`.  
+> Numbers based on a single Graviton3 `c7g.large` test node in `ap-south-1a`.
 > Re-run with `make bench` once code is available.
 
 ---

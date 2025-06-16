@@ -1,17 +1,13 @@
 repos:
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.87.0 # pin tag
+    rev: v1.99.4 # pin tag
     hooks:
       - id: terraform_fmt
-
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.87.0
-    hooks:
-      - id: tflint
-      - id: tfsec
+      - id: terraform_validate
+      - id: terraform_tflint
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
