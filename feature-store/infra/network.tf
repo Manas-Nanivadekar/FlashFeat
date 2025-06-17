@@ -36,3 +36,8 @@ resource "aws_route_table" "flashfeat_dev" {
   tags = merge(aws_vpc.flashfeat_dev.tags, { Name = "flashfeat-dev-rt" })
 
 }
+
+resource "aws_route_table_association" "flashfeat_dev_a" {
+  subnet_id      = aws_subnet.flashfeat_dev_a.id
+  route_table_id = aws_route_table.flashfeat_dev.id
+}
