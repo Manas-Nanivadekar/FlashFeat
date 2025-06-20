@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euo pipefail
+yum -y update
+# 1. install nitro-cli
+yum -y install nitro-cli
+# 2. install Go runtime
+yum -y install golang
+# 3. fetch sidecar + enclave binaries from S3 or GH Release
+aws s3 cp s3://${s3_bucket}/bootstrap/sidecar /usr/local/bin/sidecar
+aws s3 cp s3://${s3_bucket}/bootstrap/enclave.eif /opt/enclave.eif
+chmod +x /usr/local/bin/sidecar
+# 4. systemd service
+cat >/etc/systemd/system/flashfeat.service <<'EOF'
+[Unit]
+Description=Flashfeat parent sidecar
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/sidecar --eif /opt/enclave.eif --bucket ${s3_bucket} --region ${region}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable flashfeat
+systemctl start flashfeat
