@@ -54,6 +54,9 @@ jobs:
   terraform:
     needs: build-go
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: feature-store/infra
 
     steps:
       - uses: actions/checkout@v4
