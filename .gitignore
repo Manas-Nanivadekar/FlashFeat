@@ -40,3 +40,12 @@ terraform.rc
 .terragrunt-cache
 
 testing/
+
+# ---- Go ----
+/**/*.test
+**/coverage.out
+# compiled CLI artefacts
+feature-store/app/sidecar
+feature-store/app/enclave
+feature-store/app/seed
+feature-store/app/model
