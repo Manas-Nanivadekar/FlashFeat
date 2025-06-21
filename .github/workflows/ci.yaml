@@ -69,5 +69,8 @@ jobs:
         with:
           terraform_version: 1.8
 
+      - name: Init backend
+        run: terraform init
+
       - name: Terraform plan
         run: terraform plan
