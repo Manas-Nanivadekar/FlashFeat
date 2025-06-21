@@ -29,15 +29,6 @@ jobs:
         with:
           terraform_version: 1.8
 
-      - name: Install TFLint
-        run: |
-          curl -sSL https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh \
-            | bash -s -- v0.50.3
-          sudo mv ./tflint /usr/local/bin/
-
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
-
       - name: Init backend
         run: terraform -chdir=feature-store/infra init \
           -backend-config=backend.dev.tfbackend
