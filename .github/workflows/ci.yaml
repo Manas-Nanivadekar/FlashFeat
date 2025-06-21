@@ -50,30 +50,3 @@ jobs:
             feature-store/app/enclave
             feature-store/app/seed
             feature-store/app/model
-
-  terraform:
-    needs: build-go
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: feature-store/infra
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          role-session-name: GitHubActionsFlashfeat
-          aws-region: ap-south-1
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.8
-
-      - name: Init backend
-        run: terraform init
-
-      - name: Terraform plan
-        run: terraform plan
