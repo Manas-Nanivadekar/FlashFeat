@@ -29,6 +29,7 @@ func main() {
 	u := manager.NewUploader(s3.NewFromConfig(cfg))
 
 	row, _ := r.Read() // header ignored
+	_ = row
 	for {
 		row, err := r.Read()
 		if err != nil {
