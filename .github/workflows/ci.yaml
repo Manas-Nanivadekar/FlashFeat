@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "feature-store/infra/**.tf"
-      - ".pre-commit-config.yaml"
+      - "feature-store/app/**.go"
       - ".github/workflows/**"
 
 permissions:
@@ -12,7 +12,47 @@ permissions:
   contents: read
 
 jobs:
+  build-go:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: feature-store/app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Cache Go
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/go-build
+            ${{ github.workspace }}/feature-store/app/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('feature-store/app/go.sum') }}
+
+      - name: Run unit tests
+        run: go test ./...
+
+      - name: Build CLI binaries
+        run: |
+          CGO_ENABLED=0 go build -tags netgo -o sidecar ./cmd/sidecar
+          CGO_ENABLED=0 go build -tags netgo -buildmode=pie -o enclave ./cmd/enclave
+          CGO_ENABLED=0 go build -tags netgo -o seed   ./cmd/seed
+          CGO_ENABLED=0 go build -tags netgo -o model  ./cmd/model
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flashfeat-binaries
+          path: |
+            feature-store/app/sidecar
+            feature-store/app/enclave
+            feature-store/app/seed
+            feature-store/app/model
+
   terraform:
+    needs: build-go
     runs-on: ubuntu-latest
 
     steps:
