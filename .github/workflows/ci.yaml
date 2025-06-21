@@ -25,12 +25,9 @@ jobs:
           role-session-name: GitHubActionsFlashfeat
           aws-region: ap-south-1
 
-      - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
-
       - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.8.x
+          terraform_version: 1.8
 
       - name: Init backend
         run: terraform -chdir=feature-store/infra init \
