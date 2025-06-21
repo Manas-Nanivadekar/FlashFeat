@@ -69,9 +69,5 @@ jobs:
         with:
           terraform_version: 1.8
 
-      - name: Init backend
-        run: terraform -chdir=feature-store/infra init \
-          -backend-config=backend.dev.tfbackend
-
       - name: Terraform plan
-        run: terraform -chdir=feature-store/infra plan
+        run: terraform plan
