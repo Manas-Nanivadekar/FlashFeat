@@ -1,8 +1,6 @@
 module github.com/Manas-Nanivadekar/flashfeat
 
-go 1.23.0
-
-toolchain go1.23.10
+go 1.25.0
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.36.5
@@ -31,7 +29,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.34.0 // indirect
 	github.com/mdlayher/socket v0.2.0 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
-	golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c // indirect
+	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 )
